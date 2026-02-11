@@ -4,6 +4,7 @@
 DEFAULT_PROJECT="cloud-ae1-2775943m"
 DEFAULT_VM="cloud-systems-ae1-vm"
 DEFAULT_ZONE="europe-west1-c"
+DEFAULT_MACHINE="n2-standard-2"
 
 # Ask for user input
 read -p "Enter GCloud Project ID [$DEFAULT_PROJECT]: " GCLOUD_PROJECT
@@ -15,11 +16,15 @@ VM_NAME=${VM_NAME:-$DEFAULT_VM}
 read -p "Enter Zone [$DEFAULT_ZONE]: " ZONE
 ZONE=${ZONE:-$DEFAULT_ZONE}
 
+read -p "Enter Machine [$DEFAULT_MACHINE]: " MACHINE
+MACHINE=${MACHINE:-$DEFAULT_MACHINE}
+
 # Save these to config.sh for other scripts to use
 cat <<EOF > config.sh
 export GCLOUD_PROJECT="$GCLOUD_PROJECT"
 export VM_NAME="$VM_NAME"
 export ZONE="$ZONE"
+export MACHINE="$MACHINE"
 EOF
 
 echo "Config saved to config.sh"
@@ -31,7 +36,7 @@ gcloud config set project "$GCLOUD_PROJECT"
 echo "Creating VM instance..."
 gcloud compute instances create "$VM_NAME" \
     --zone "$ZONE" \
-    --machine-type c4-standard-2 \
+    --machine-type $MACHINE \
     --image-family ubuntu-2404-lts-amd64 \
     --image-project ubuntu-os-cloud \
     --tags cloud-systems
