@@ -1,11 +1,18 @@
 FROM ubuntu:22.04
 
-ENV cpu_arch=x86
+RUN apt-get update && apt-get install -y \
+    iputils-ping \
+    curl \
+    fio \
+    sysbench \
+    iperf3
 
-RUN apt-get update -y && \
- apt-get install -y sysbench && \
- apt-get install -y fio && \
- apt-get install -y iperf3 && \
- apt-get clean
+WORKDIR /app
 
-CMD ["/usr/bin/sysbench"]
+ENV IPERF_SERVER= [Iperf Address]
+
+COPY test_suite.sh .
+
+RUN chmod +x test_suite.sh
+
+CMD ["./test_suite.sh"]
