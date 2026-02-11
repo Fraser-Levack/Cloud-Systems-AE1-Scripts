@@ -1,0 +1,3 @@
+    events per second:  2808.02
+         avg:                                    0.71
+         max:                                   29.19

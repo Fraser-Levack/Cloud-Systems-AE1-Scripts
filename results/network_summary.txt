@@ -1,0 +1,1 @@
+[  5]   0.00-60.00  sec  69.6 GBytes  9.96 Gbits/sec                  receiver

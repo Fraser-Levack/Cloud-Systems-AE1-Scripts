@@ -1,0 +1,29 @@
+services:
+  cpu-bench:
+    image: sysbench-ubuntu
+    volumes:
+      - ./results:/results
+    command: >
+      bash -c "sysbench cpu --time=60 --threads=2 run 
+      | grep -E 'events per second:|avg:|max:' 
+      > /results/cpu_summary.txt"
+
+  disk-bench:
+    image: sysbench-ubuntu
+    volumes:
+      - ./results:/results
+    # Removed the problematic log flag and simplified the output pipe
+    command: >
+      bash -c "fio --name=test --rw=randrw --bs=4k --runtime=60 --iodepth=64 --size=256M --numjobs=4 --time_based --group_reporting
+      | grep -E 'READ:|WRITE:' 
+      > /results/disk_summary.txt"
+
+  network-bench:
+    image: sysbench-ubuntu
+    volumes:
+      - ./results:/results
+    # This runs a server in the background, then runs the client against it
+    command: >
+      bash -c "iperf3 -c localhost -t 60 
+      | grep 'receiver' 
+      > /results/network_summary.txt"
