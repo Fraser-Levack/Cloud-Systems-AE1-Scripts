@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-logDir="logFiles"
+logDir="$(date -Is)_logFiles"
 mkdir -p "$logDir"
 
 for iteration in 1 2 3
