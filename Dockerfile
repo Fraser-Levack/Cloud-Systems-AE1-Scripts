@@ -1,6 +1,6 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
-ENV cpu_arch=amd64
+ENV cpu_arch=x86
 
 RUN apt-get update -y && \
  apt-get install -y sysbench && \
